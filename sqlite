@@ -1,0 +1,29 @@
+import sqlite3
+
+def criar_banco():
+    """criar banco e tabela"""
+    conn = sqlite3.connect("vendas.db")
+    cursor = conn.cursor()
+    cursor.execute(""" 
+CREATE TABLE IF NOTS EXISTS vendas(
+                   id vendas INTEGER PRIMARY KEY AUTOINCREMENT,
+                  produto TEXT, 
+                   quantidade INTEGER,
+                   preco REAL )
+""")
+    conn.commit()
+    conn.close()
+def inserir_venda(produto, quantidadde, preco):
+    conn =sqlite3.connect("vendas.db")
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO vendas (produto, quantidade, preco) VALUES (?, ?, ?)",
+                   (produto, quantidadde, preco)) 
+    conn.commit()
+    conn.close()
+def listar_vendas():
+ conn =sqlite3.connect("vendas.db")
+ cursor = conn.cursor()
+ cursor.execute("SELECT * FROM vendas")
+ registros = cursor.fetchall()
+ conn.close()
+ return registros
